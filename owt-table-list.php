@@ -74,7 +74,7 @@ function sp_owt_show_date_list_table_klient($owt_table,$data)
 
     //calling prepare_items from class
     $owt_table->prepair_items($data);
-     echo esc_html('<h3>Sites:</h3>');
+     echo '<h3>Sites:</h3>';
 
      $owt_table->display();
 }
