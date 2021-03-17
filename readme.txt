@@ -13,3 +13,6 @@ Site permission is a plugin that restricts access to pages
 == Description ==
 Easily set the dosep to specific pages and, thanks to the customer panel, make a page with special content for visitors.
 
+**Bug Reports**
+
+Bug reports for [Site Permission are welcomed on GitHub](https://github.com/Pythontest-dev/Site-Permissions/issues).
