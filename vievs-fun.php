@@ -276,13 +276,13 @@ function sp_Kpanelset()
      }
      if($show=='1')
      {
-     if(haveAccess($id)){
+     if(sp_haveAccess($id)){
         array_push($array,array("name"=>esc_html($name),"action"=>"<a href=$link><input type=button value='View' class='button button-primary'></a>"));
     }
 }
     }
     $table = new sp_OWTTableListKlient();
-    owt_show_date_list_table_klient($table, $array);
+    sp_owt_show_date_list_table_klient($table, $array);
 }
 function sp_analytics()
 {if(current_user_can( 'manage_options' ))
