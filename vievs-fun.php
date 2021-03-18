@@ -4,7 +4,7 @@ require_once 'function.php';
  //panele
 
  //panel stron
- function sp_my_plugin_options() {
+ function siteperm_my_plugin_options() {
     if ( !current_user_can( 'manage_options' ) )  {
     wp_die( __(esc_html( 'You do not have sufficient permissions to access this page.' )) );
  }
@@ -19,7 +19,7 @@ require_once 'function.php';
         
         $id = sanitize_text_field($_POST['id']);
         $name = sanitize_text_field($_POST['name']);
-        $roles = sp_wp_roles_array();
+        $roles = siteperm_wp_roles_array();
         global $wp_roles;
         $code = "";
         $id_block = get_post_meta($id, "block", true);
@@ -33,7 +33,7 @@ require_once 'function.php';
             
             update_post_meta($id, "show", $show);
         }
-        echo "<form action='admin.php?page=sp_site-perm' method=Post><h2>you are editing the page ".esc_html($name)." </h2><h4>kod: </h4><input value=".esc_html($id_block)." name=id_block id=id><br><input type=hidden value=$id name=id_ok><br><h2>Roles:</h2>";
+        echo "<form action='admin.php?page=siteperm_site-perm' method=Post><h2>you are editing the page ".esc_html($name)." </h2><h4>kod: </h4><input value=".esc_html($id_block)." name=id_block id=id><br><input type=hidden value=$id name=id_ok><br><h2>Roles:</h2>";
  
         
         for($i=0;$i<count($roles);$i++)
@@ -66,7 +66,7 @@ require_once 'function.php';
          
             echo"<div><input type='checkbox' id='scales' name='scales' onchange=change('".esc_js($name)."',this.checked) ".esc_js($text)."><label for='scales'>".esc_html($name)."</label></div>";
         }
-        if(sp_IsKPanel())
+        if(siteperm_IsKPanel())
         {
             echo "<input type=hidden value=1 name=cancheckpanel>";
             if($show=='1')
@@ -140,10 +140,10 @@ require_once 'function.php';
     {
      $name = $pages[$i]->post_title;
      $id = $pages[$i]->ID;
-     array_push($array,array("id"=>$id, "name"=>esc_html($name),"edit"=>"<form action='admin.php?page=sp_site-perm' method='POST'><input type=hidden name=id value=".esc_html($id)."><input type=hidden name=name value='".esc_html($name)."'><input type=submit value='edit' class='button button-primary'></form>"));
+     array_push($array,array("id"=>$id, "name"=>esc_html($name),"edit"=>"<form action='admin.php?page=siteperm_site-perm' method='POST'><input type=hidden name=id value=".esc_html($id)."><input type=hidden name=name value='".esc_html($name)."'><input type=submit value='edit' class='button button-primary'></form>"));
     }
-    $table = new sp_OWTTableList();
-     sp_owt_show_date_list_table($table, $array);
+    $table = new siteperm_OWTTableList();
+    siteperm_owt_show_date_list_table($table, $array);
 }
     }
 }
@@ -151,7 +151,7 @@ require_once 'function.php';
  
  }
  // panel ustawień
- function sp_seet_site_perm()
+ function siteperm_seet_site_perm()
 {
     if(current_user_can( 'manage_options' ))
     {
@@ -159,44 +159,44 @@ require_once 'function.php';
     {
         $on = sanitize_text_field($_POST['on']);
         $roles = sanitize_text_field($_POST['code']);
-        $result = sp_DBP_Tb_read("0");
-        $value = sp_DBP_tb_write("0",$on);
+        $result = siteperm_DBP_Tb_read("0");
+        $value = siteperm_DBP_tb_write("0",$on);
         if($value == "ERROR")
         {
-        wp_die( __(  sp_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ));
+        wp_die( __(  siteperm_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ));
         }
-        $value = sp_DBP_tb_write("1",$roles);
+        $value = siteperm_DBP_tb_write("1",$roles);
         if($value == "ERROR")
         {
-        wp_die( __( sp_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ) );
+        wp_die( __( siteperm_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ) );
         }
         echo '<div class="updated notice"><p><strong>Data saved!</strong></p></div>';
     }
     else
     {
     echo "<h1>Settings:</h1>";
-    $roles = sp_wp_roles_array();
+    $roles = siteperm_wp_roles_array();
     global $wp_roles;
-    $value = sp_DBP_tb_read("1");
+    $value = siteperm_DBP_tb_read("1");
     if(!$value)
     {
         $value = "0";
     }
     else if($value == "ERROR")
     {
-         sp_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error');
+        siteperm_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error');
     }
-    $or_on = sp_DBP_tb_read("0");
+    $or_on = siteperm_DBP_tb_read("0");
     if(!$or_on)
     {
         $or_on = "off";
     }
     else if($value == "ERROR")
     {
-        wp_die( __( sp_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ) );
+        wp_die( __( siteperm_show_admin_warning('<strong>'.__('Sorry, an error has occurred', 'Site-Perm').'</strong>', 'error') ) );
     }
     
-    echo "<form action=admin.php?page=sp_seet-site-perm method=post>";
+    echo "<form action=admin.php?page=siteperm_seet-site-perm method=post>";
     echo "<input type=hidden name=code id=code_site_perm value=".esc_html($value)." />";
     echo "<h2>Select whether the client panel is enabled:</h2>";
     if($or_on == 'off')
@@ -260,7 +260,7 @@ require_once 'function.php';
 }
 }
 }
-function sp_Kpanelset()
+function siteperm_Kpanelset()
 {
     $pages = get_pages();
     $array = array();
@@ -276,15 +276,15 @@ function sp_Kpanelset()
      }
      if($show=='1')
      {
-     if(sp_haveAccess($id)){
+     if(siteperm_haveAccess($id)){
         array_push($array,array("name"=>esc_html($name),"action"=>"<a href=$link><input type=button value='View' class='button button-primary'></a>"));
     }
 }
     }
-    $table = new sp_OWTTableListKlient();
-    sp_owt_show_date_list_table_klient($table, $array);
+    $table = new siteperm_OWTTableListKlient();
+    siteperm_owt_show_date_list_table_klient($table, $array);
 }
-function sp_analytics()
+function siteperm_analytics()
 {if(current_user_can( 'manage_options' ))
     {
     wp_die(esc_html("this panel is not ready yet"));

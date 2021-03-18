@@ -1,6 +1,6 @@
 <?php
 require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
-class sp_OWTTableList extends WP_List_Table {
+class siteperm_OWTTableList extends WP_List_Table {
     // define data set for WP_List_Table => data
     // prepair_items
     public function prepair_items($data){
@@ -30,7 +30,7 @@ class sp_OWTTableList extends WP_List_Table {
         }
     }
 }
-function sp_owt_show_date_list_table($owt_table,$data)
+function siteperm_owt_show_date_list_table($owt_table,$data)
 {
     
 
@@ -40,7 +40,7 @@ function sp_owt_show_date_list_table($owt_table,$data)
 
     $owt_table->display();
 }
-class sp_OWTTableListKlient extends WP_List_Table {
+class siteperm_OWTTableListKlient extends WP_List_Table {
     // define data set for WP_List_Table => data
     // prepair_items
     public function prepair_items($data){
@@ -68,7 +68,7 @@ class sp_OWTTableListKlient extends WP_List_Table {
         }
     }
 }
-function sp_owt_show_date_list_table_klient($owt_table,$data)
+function siteperm_owt_show_date_list_table_klient($owt_table,$data)
 {
     
 

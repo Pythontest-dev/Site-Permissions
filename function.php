@@ -1,7 +1,7 @@
 <?php
 
 // Funkcja do zczytywania meta danych wtyczki
-function sp_DBP_tb_read($id)
+function siteperm_DBP_tb_read($id)
 {
     global $wpdb;
     $id=sanitize_sql_orderby($id);
@@ -27,7 +27,7 @@ function sp_DBP_tb_read($id)
 }
 // funkcja do tworzenia tabeli
 
-function sp_wp_roles_array() {
+function siteperm_wp_roles_array() {
     $editable_roles = get_editable_roles();
     foreach ($editable_roles as $role => $details) {
         $sub['role'] = esc_attr($role);
@@ -37,7 +37,7 @@ function sp_wp_roles_array() {
     return $roles;
 }
 //funkcja blokowania i zezwalania na strony
-function sp_block( $content ) {
+function siteperm_block( $content ) {
 
     global $post;
     $id_block = get_post_meta($post->ID, "block", true);
@@ -73,13 +73,13 @@ function sp_block( $content ) {
      wp_die( __( 'Sorry, you are not allowed to access this page.' ) );
     }
  }
- function sp_DBP_tb_write($key,$value)
+ function siteperm_DBP_tb_write($key,$value)
  {
     global $wpdb;
     $key=sanitize_sql_orderby($key);
     $conn = new mysqli($wpdb->dbhost,$wpdb->dbuser,$wpdb->dbpassword, $wpdb->dbname);
     $DPB_tb_name=sanitize_sql_orderby($wpdb->prefix."perm_site_seetings");
-    $test = sp_DBP_tb_read($key);
+    $test = siteperm_DBP_tb_read($key);
     if($test == "ERROR")
     {
         return 'ERROR';
@@ -99,7 +99,7 @@ function sp_block( $content ) {
 
 
  }
-function sp_addPluginSettingsLinkk($links) {
+function siteperm_addPluginSettingsLinkk($links) {
     if (!is_network_admin()) {
         $link = '<a href="admin.php?page=sp_site-perm">'.__('Site Permissions', 'Site Permission').'</a>';
         array_unshift($links, $link);
@@ -110,12 +110,12 @@ function sp_addPluginSettingsLinkk($links) {
 
     return $links;
 }
-function sp_show_admin_warning($message, $class = "updated") {
+function siteperm_show_admin_warning($message, $class = "updated") {
     return '<div class="tfamessage '.$class.'">'."<p>$message</p></div>";
 }
-function sp_TestKPanel()
+function siteperm_TestKPanel()
 {
-    $id_block = sp_DBP_tb_read("1");
+    $id_block = siteperm_DBP_tb_read("1");
     if(!$id_block)
         return false;
     $a_user = wp_get_current_user();
@@ -139,15 +139,15 @@ function sp_TestKPanel()
   }
   return $accept;
 }
-function sp_IsKPanel()
+function siteperm_IsKPanel()
 {
-    $result = sp_DBP_tb_read("0");
+    $result = siteperm_DBP_tb_read("0");
     if($result == "off")
     {
         return false;
     }else{return true;}
 }
-function sp_haveAccess($id)
+function siteperm_haveAccess($id)
 {
     $id_block = get_post_meta($id, "block", true);
     $a_user = wp_get_current_user();
